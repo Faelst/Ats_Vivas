@@ -1,0 +1,234 @@
+<link rel="stylesheet" href="css/autocomplete.css">
+
+<div class="container-fluid">
+    <div class="m-5">
+        <div class="row">
+            <div class="col">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <h5 class="mr-auto p-2">Agentes:</h5>
+                            <button type="button" class="btn btn-success" data-toggle="modal"
+                                data-target="#modalCadastrarUsuario">
+                                Cadastrar Usuario
+                            </button>
+                        </div>
+
+                        <div class="modal fade" id="modalCadastrarUsuario" tabindex="-1" role="dialog"
+                            aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="">Cadastrar Usuario</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputNomeCompleto">Nome
+                                                    Completo</span>
+                                            </div>
+                                            <input type="text" class="form-control" id='nomeComletoUsuario' placeholder="" aria-label="Username"
+                                                aria-describedby="basic-addon1">
+                                        </div>
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="">Login</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Nome" id="primeiroLogin"
+                                                aria-label="Username" aria-describedby="basic-addon1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="">.</span>
+                                            </div>
+                                            <input type="text" class="form-control" placeholder="Sobrenome" id="segundoLogin"
+                                                aria-label="Username" aria-describedby="basic-addon1">
+
+                                        </div>
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">Senha</span>
+                                            </div>
+                                            <input type="password" class="form-control rounded-right" placeholder="" id='senhaCadastro'
+                                                aria-label="Username" aria-describedby="passwordHelpInline">
+                                        </div>
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <input type="checkbox" id="checkboxAdmin"
+                                                        aria-label="Checkbox for following text input">
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control"
+                                                aria-label="Text input with checkbox" value="Administrador" disabled>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-danger"
+                                            data-dismiss="modal">Fechar</button>
+
+                                        <button type="button" class="btn btn-success" id="btncadastrarUsuario">Cadastrar</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <hr>
+                        <table id="TabelaAgentes" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col">
+
+                <div class="card card mt-lg-0 mt-md-0 mt-sm-5 mt-xs-5 mt-5">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <h5 class="mr-auto p-2">Tecnicos:</h5>
+                            <button type="button" id='addEquipe' class="btn btn-success" data-toggle="modal"
+                                data-target="#exampleModalCenter" disabled>Adicionar Tecnico</button>
+                        </div>
+                        <hr>
+
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Adicionar a Equipe</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <a class="mt-2 mr-2"> Reponsavel: </a>
+                                                <span class="input-group-text rounded" id="nomeAgente"></span>
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="nomeTenicoAdicional"
+                                                aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success" id="btnAdd"
+                                                    type="button">Adicionar</button>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start mt-1">
+                                            <a href="#" lass="btn btn-primary" id="linkCadastrarTecnico"
+                                                data-toggle="modal" data-target="#modalTecnico"
+                                                data-dismiss="modal">Cadastrar Tecnico </a>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- INICIO DO MODAL PARA CADASTRAR TECNICO  -->
+                        <div class="modal fade" id="modalTecnico" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button id='btnVoltar' data-dismiss="modal"
+                                            class="previous round mr-2 border border-dark" style="background-color: #00000000;text-decoration: none;
+                                        display: inline-block;
+                                        padding: 6px 12px;
+                                        color: black;border-radius: 50%;">&#8249;</button>
+                                        <h5 class="modal-title ml-2" style="margin-top:5.7px;" id="exampleModalLabel">
+                                            Cadastrar Tecnico</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">Nome do Tecnico
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" id="nomeTecnico" class="form-control"
+                                                        placeholder="" aria-label="Username"
+                                                        aria-describedby="basic-addon1">
+                                                </div>
+
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <label class="input-group-text"
+                                                            for="inputGroupSelect01">Cidade</label>
+                                                    </div>
+                                                    <select class="custom-select" id="selecionarCidade">
+                                                        <option selected>Selecionar Cidade</option>
+                                                    </select>
+                                                </div>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">Descrição</span>
+                                                    </div>
+                                                    <textarea class="form-control" id='texteDescricao'
+                                                        aria-label="With textarea"></textarea>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id='cadastrarTecnico'
+                                            class="btn btn-success">Cadastrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table id="TabelaTecnico" class="display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+</div>
+
+<script src="js/PopularTabelasEquipes/comportamento.js"></script>
+<script src="js/Requisicoes.js"></script>

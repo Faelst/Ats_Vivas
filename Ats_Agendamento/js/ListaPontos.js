@@ -17,7 +17,6 @@ $(document).ready(function () {
             { 'data': 'Pontos_normais' },
             { 'data': 'Pontos_adicionados' },
             { 'data': 'pontos_totais' },
-
         ]
     });
 
@@ -34,6 +33,7 @@ $(document).ready(function () {
         nextText: 'Próximo',
         prevText: 'Anterior'
     });
+
     $("#dataFinal").datepicker({
         dateFormat: 'dd/mm/yy',
         dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
@@ -44,7 +44,6 @@ $(document).ready(function () {
         nextText: 'Próximo',
         prevText: 'Anterior'
     });
-
 })
 
 $('#btnFiltrar').click(function () {
@@ -69,7 +68,7 @@ function intervaloData(data1, data2) {
                 preencherTabelaFiltro(jsonData);
                 }else{ alert("Nenhuma informação encontrada\nDIGITE AS DATAS CORRETAMENTE.") }
             } else {
-                alert('Nenhuma Informação foi encontrada'); 
+                alert('Nenhuma Informação foi encontrada');
                 table.clear().draw();
             }
         });

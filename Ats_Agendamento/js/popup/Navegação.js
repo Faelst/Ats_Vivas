@@ -17,4 +17,3 @@ $.get($(this).attr('href'), function(data, status){
   });
         
 });
-

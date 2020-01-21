@@ -1,0 +1,72 @@
+.profile-header-container{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.profile-header-img {
+    padding: 0px;
+}
+
+.profile-header-img > img.img-circle {
+    width: 70px;
+    height: 70px;
+    max-width:70px;
+    max-height: 70px;
+    border: 1px solid #ef4a01;
+}
+
+.profile-header {
+    margin-top: 43px;
+}
+
+/**
+ * Ranking component
+ */
+.rank-label-container {
+    margin-top: -19px;
+    /* z-index: 1000; */
+    text-align: center;
+}
+
+.label.label-default.rank-label {
+    background-color: rgb(81, 210, 183);
+    padding: 5px 10px 5px 10px;
+    border-radius: 27px;
+}
+
+.profile-header-img > img.img-circleModal {
+    width: 130px;
+    height: 130px;
+    max-width: 130px;
+    max-height: 130px;
+    border: 2px solid #ef4a01;
+}
+
+.houver-img:hover .img-hover{
+	-webkit-filter: grayscale(50%) blur(3px);
+	filter: grayscale(50%) blur(7px);
+}
+
+.row:hover .middle{
+	opacity: 1;
+}
+
+
+.middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    text-align: center;
+  }
+  
+  .text {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #ef4a01;
+    font-size: 25px;
+    padding: 16px 32px;
+  }

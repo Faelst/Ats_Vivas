@@ -10,6 +10,8 @@ var motivo;
 
 
 
+
+
 $('#btnModal').click(function (e) {
     e.preventDefault();
     // Validação ( caso o btn a 'PESQUISA ENCONTRE UM ELE ELEMENTO' ocorra estas funções )
@@ -22,7 +24,7 @@ $('#btnModal').click(function (e) {
 });
 
 $('a').click(function () {
-    $('#selectTipoPesquisa').text($('.dropdown-item').attr('value'));
+    $('#selectTipoPesquisa').text($('.item-selecionado').attr('value'));
     if ($('#inputEditar').val().length >= 1 && $('#selectTipoPesquisa').text() != 'Selecionar') {
         $('#btnPesquisar').prop('disabled', false);
     } else {
@@ -42,7 +44,7 @@ $('#btnPesquisar').click(function (e) {
 
 
     var numeroOrdem = $('#inputEditar').val();
-    var tipoPesquisa = $('.dropdown-item').attr('value');
+    var tipoPesquisa = $('.item-selecionado').attr('value');
 
 
     e.preventDefault();
@@ -137,11 +139,38 @@ function limparCampos() {
 
 }
 
+var valorPontoExtra
+
+$('.dropdown-menu a').click(function (e) {
+    if ($(this).text() != 'Duplado') {
+        $('#pontoExtra').show('slow');
+        $('#txPontos').val('');
+        $('#tipoOrdem').val($(this).text());
+        $('#txPontos').val($(this).attr('value'));
+        valorPontoExtra = $(this).attr('value');
+    } else {
+        duplado($(this).text());
+    }
+
+})
+
+function duplado(p1) {
+    $('#tipoOrdem').val(p1);
+    $('#txPontos').val('');
+    $("#txPontos").attr("placeholder", "_.__");
+    $('#pontoExtra').hide('slow');
+    $('#txPontos').css('border-color', 'yellow');
+    $("#txPontos").prop("disabled", false);
+    $("#txPontos").inputmask({ mask: ['9.99', '9.99'], keepStatic: true });
+}
+
+
+
 
 $('#btnAlterar').click(function () {
 
 
-    let url = 'php/EditarExcluir.php?flag=alterar&nOrdem='+$('#nOrdemServico').val()+"&idOrdem="+$('#inputEditar').val();
+    let url = 'php/EditarExcluir.php?flag=alterar&nOrdem=' + $('#nOrdemServico').val() + "&idOrdem=" + $('#inputEditar').val();
 
 
     if ($('#selectCIdade').val() !== selectCidade) {
@@ -162,7 +191,7 @@ $('#btnAlterar').click(function () {
     if ($('#txtObs').val() !== Obs) {
         url += '&txtObs=' + $('#txtObs').val();
     }
-    
+
     if (confirm('Tem Certeza que Deseja ALTERAR ?')) {
         $.get(url)
             .done(function (data) {
@@ -170,26 +199,29 @@ $('#btnAlterar').click(function () {
                     alert('Ordem alterada com sucesso');
                     limparCampos();
                     $('.conteudo').hide('slow');
-                }else {
-                    alert (data);
+                    $('#example').DataTable().ajax.url('php/PopularTables.php?flag=1').load();
+                } else {
+                    alert(data);
                 }
-            
+
 
             })
     }
 })
+
 
 $('#btnExcluir').click(function () {
 
     if (confirm('Tem Certeza que Deseja excluir ?')) {
         $.get('php/EditarExcluir.php?flag=excluir&idOrdem=' + $('#inputEditar').val() + '&nOrdem=' + $('#nOrdemServico').val())
             .done(function (data) {
-                
+
                 if (data == '1') {
                     limparCampos();
                     $('#inputEditar').val('');
                     $('.conteudo').hide('slow');
                     alert('Ordem Deletada com sucesso');
+
                 }
             });
     }
@@ -202,7 +234,7 @@ function autoComplete() {
     $.ajax({
         type: 'GET',		    //Definimos o método HTTP usado
         dataType: 'json',	            //Definimos o tipo de retorno
-        url: "./php/PopularTecnico.php",    //Definindo o arquivo onde serão buscados os dados
+        url: "./php/PopularTecnico.php?flag=2",    //Definindo o arquivo onde serão buscados os dados
         success: function (dados) {
             for (var i = 0; dados.length > i; i++) {
                 //Adicionando registros retornados na tabela

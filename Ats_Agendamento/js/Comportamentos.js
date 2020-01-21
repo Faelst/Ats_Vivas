@@ -1,9 +1,13 @@
+var valorPontoExtra
 var check;
 var duplado;
+var qtdeDuplicado;
 
 $(document).ready(function () {
     //ESCONDER O AS INFORMAÇÕES DE PONTO EXTRA
     $("#divPontoExtra").hide();
+    $('#tecnicoDuplado').hide();
+
     check = false;
     //funcão para chama a validação por mascara
     callMasck();
@@ -21,40 +25,44 @@ $(document).ready(function () {
 
 })
 
+
 $('#PotucaoExtra').click(function () {
 
     if (document.getElementById('PotucaoExtra').checked) {
-        $("#divPontoExtra").show();
+        $("#divPontoExtra").show('slow');
         check = true;
     } else {
-        $("#divPontoExtra").hide();
+        $("#divPontoExtra").hide('slow');
         check = false;
     }
-    console.log('check' + check);
+    console.log('check ' + check);
 });
 
 $('#btnCadastrar').click(function () {
+
+
     validarCampos('#nOrdemServico');
     validarCampos('#selectCIdade');
     validarCampos('#dataAbertura');
     validarCampos('#nomeTenico')
     validarCampos('#tipoOrdem')
+    validarCampos('#txtAreaObservação');
+
 
     if ((document.getElementById('PotucaoExtra').checked) && (($('#txtPontosExtra').val()).length)) {
         validarCampos('#txtAreaPontoExtra')
     } else { $('#txtAreaPontoExtra').css('border-color', 'white') }
 
-    console.log(valorPontoExtra)
-    if (valorPontoExtra == '0') {
+    if ($('#tipoOrdem').val() === 'Duplado') {
+        validarCampos('#nomeTenicoDuplado');
+    }
+    //Faz a verificação e depois chama outro metodo.
+    protocoloDuplicado();
 
-        validarCampos('#txtAreaObservação')
-    } else { $('#txtAreaObservação').css('border-color', 'white') }
+    // VERIFICA SE A ALGUM ERRO NA HORA DO CARREGAMENTO DA PAGINA
 
-
-    // APÓS FAZER TODAS AS VALIDÇÕES E ESTAR TUDO CORRETO CHAMAR FUNÇÃO PARA EXECUTAR O CADASTRO NO BANCO.
-    callCadastro();
-
-    window.onerror = function (msg, url, lineNo, columnNo, error) {
+    // ESTA COMENTADO PELO FATO DE ESTAR DANDO ALGUM ERRO
+    /*window.onerror = function (msg, url, lineNo, columnNo, error){
         var string = msg.toLowerCase();
         var substring = "script error";
         if (string.indexOf(substring) > -1) {
@@ -63,8 +71,24 @@ $('#btnCadastrar').click(function () {
             alert(msg, url, lineNo, columnNo, error);
         }
         return false;
-    };
+    };*/
 })
+
+
+
+function protocoloDuplicado() {
+    $.get('./php/CadastroAgendamento.php?switchFlag=2&nOrdem=' + $('#nOrdemServico').val())
+        .done(function (resp) {
+            console.log(resp);
+            if (parseInt(resp) == 0) {
+                callCadastro();
+            } else {
+                if (confirm('Deseja cadastrar a Ordem: ' + $('#nOrdemServico').val() + ' novamente ?')) {
+                    callCadastro();
+                }
+            }
+        })
+}
 
 function validarCampos(elemento) {
     if (!($(elemento).val()).length) {
@@ -72,31 +96,67 @@ function validarCampos(elemento) {
     } else { $(elemento).css('border-color', 'white') }
 }
 
-var valorPontoExtra
 
 $('.dropdown-menu a').click(function (e) {
     if ($(this).text() != 'Duplado') {
         $('#pontoExtra').show('slow');
+        $('#tecnicoDuplado').hide('slow');
         $('#txPontos').val('');
         $('#tipoOrdem').val($(this).text());
         $('#txPontos').val($(this).attr('value'));
         valorPontoExtra = $(this).attr('value');
+        $("#txPontos").prop("disabled", true);
     } else {
         duplado($(this).text());
     }
-
 })
 
 function duplado(p1) {
-    $('#tipoOrdem').val(p1);
-    $('#txPontos').val('');
-    $("#txPontos").attr("placeholder", "_.__");
-    $('#pontoExtra').hide('slow');
-    $('#txPontos').css('border-color', 'yellow');
-    $("#txPontos").prop("disabled", false);
-    $("#txPontos").inputmask({ mask: ['9.99', '9.99'], keepStatic: true });
+    $('#txPontosDuplado').val(''); // seta o valor do input para nulo
+    $('#nomeTenicoDuplado').val(''); // seta o valor do input para nulo 
+    $('#tipoOrdem').val(p1); // preenche o input do tipo de solicitação
+    $('#txPontos').val(''); // seta o valor do input para nulo
+    $("#txPontos").attr("placeholder", "_.__"); // coloca um place holder no input
+    $('#pontoExtra').hide('slow'); // Esconde o check box de pontuação extra.
+    $('#tecnicoDuplado').show('slow'); // Exibe o a o input de tecnico duplado.
+    $('#txPontos').css('border-color', 'yellow'); // Altera a cor do input para ficar destacado para o usuario. 
+    $("#txPontos").prop("disabled", false); // Desabilita a opção de inserção de caracter.
+    $("#txPontos").inputmask({ mask: ['9.99', '9.99'], keepStatic: true }); // Mascara de input do procedimento duplado.
+    popularTecnicoDuplado(); // Popula TODOS os tecnicos para que seja cadastrados os procedimentos 'DUPLAODOS'.
 }
 
+
+function popularTecnicoDuplado() {
+
+    var PopularTecnico = [];
+
+    $.ajax({
+        type: 'GET',		    //Definimos o método HTTP usado
+        dataType: 'json',	            //Definimos o tipo de retorno
+        url: "./php/PopularTecnico.php?flag=2",    //Definindo o arquivo onde serão buscados os dados
+        success: function (dados) {
+            for (var i = 0; dados.length > i; i++) {
+                //Adicionando registros retornados na tabela
+                PopularTecnico[i] = dados[i].nome_tecnico;
+
+            }
+        },
+        error: function (request, status, error) {
+            alert(request.responseText);
+        }
+    });
+
+    $('#nomeTenicoDuplado').empty();
+
+    $('#nomeTenicoDuplado').autocomplete({
+        source: PopularTecnico,
+        minLength: 3
+    });
+}
+
+$('#txPontos').change(function () {
+    $('#txPontosDuplado').val((($('#txPontos').val()) / 2).toFixed(2));
+})
 
 function callMasck() {
     $("#dataAbertura").inputmask({
@@ -138,40 +198,39 @@ function callCadastro() {
     var observacao = $('#txtAreaObservação').val();
     var nomeTecnico = $('#nomeTenico').val();
 
-    console.log(pontuacaoExtra);
-    console.log(motivoPontoExtra);
+    var nomeTenicoDuplado = $('#nomeTenicoDuplado').val();
+
     // criação dos paramentros para requisição
 
-    alert('ENQUANTO EU NAO GANHAR BOLO DE LEITE NINHO NAO VOU CADASTAR !!!!!!!!!!!!!!')
+    $.ajax({
+        url: './php/CadastroAgendamento.php?switchFlag=1',
+        cache: 'false',
+        method: 'GET',
+        async: true,
+        dataType: 'html',
+        data: {
+            numeroOrdem: numeroOrdem,
+            cidade: cidade,
+            dataExecucao: dataExecucao,
+            dataFechamento: dataFechamento,
+            tipoOrdenServico: tipoOrdenServico,
+            pontuacaoExtra: pontuacaoExtra,
+            motivoPontoExtra: motivoPontoExtra,
+            observacao: observacao,
+            nomeTecnico: nomeTecnico,
+            nomeTenicoDuplado: nomeTenicoDuplado,
+            check: check
+        },
+    })
+        .done(function (resp) {
+            if (resp == 1) {
+                alert("Cadastro realizado com Sucesso.\nAgendamento e o melhor setor da VIVAS.");
+                limparCampos();
+            } else {
+                alert(resp);
+            }
+        })
 
-     $.ajax({
-         url: './php/CadastroAgendamento.php',
-         cache: 'false',
-         method: 'GET',
-         async: true,
-         dataType: 'html',
-         data: {
-             numeroOrdem: numeroOrdem,
-             cidade: cidade,
-             dataExecucao: dataExecucao,
-             dataFechamento: dataFechamento,
-             tipoOrdenServico: tipoOrdenServico,
-             pontuacaoExtra: pontuacaoExtra,
-             motivoPontoExtra: motivoPontoExtra,
-             observacao: observacao,
-             nomeTecnico: nomeTecnico,
-             check: check
-         },
-     })
-         .done(function (resp) {
-             if (resp == 1) {
-                 alert("Cadastro realizado com Sucesso.\nAgendamento e o melhor setor da VIVAS.");
-                 limparCampos();
-             } else {
-                 alert(resp);
-             }
-         })
- 
 }
 
 
@@ -184,4 +243,8 @@ function limparCampos() {
     $('#txtAreaPontoExtra').val('');
     $('#txtAreaObservação').val('');
     $('#nomeTenico').val('');
+    $('#nomeTenicoDuplado').val('');
+    $('#txPontosDuplado').val('');
 }
+
+

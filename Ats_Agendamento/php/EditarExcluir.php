@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 if ($_GET['flag'] == 'setar') {
     selecionarAlterar();
 } else if ($_GET['flag'] == 'excluir') {
@@ -19,25 +21,28 @@ function intervalo()
     $sql .= " FROM cadastro_agendamento AS cad , tecnico AS tec , procedimento_agendamento AS proc ";
     $sql .= " WHERE tec.id_tecnico = cad.fk_nome_tecnico ";
 
+    if (intval($_SESSION['admin_user']) == 0) {
+        $sql .= " AND cad.fk_usuario = " . intval($_SESSION['id_usuario']) . " ";
+    }
+
     if (isset($_GET['dataInicial'])) {
         $dataInicial =  \DateTime::createFromFormat('d/m/Y', $_GET['dataInicial']);
-        $sql .= "AND cad.data_execucao BETWEEN '{$dataInicial->format('Y-m-d')}' ";
+        $sql .= " AND cad.data_execucao BETWEEN '{$dataInicial->format('Y-m-d')}' ";
     }
     if (isset($_GET['dataFinal'])) {
         $dataFinal =  \DateTime::createFromFormat('d/m/Y', $_GET['dataFinal']);
-        $sql .= "AND '{$dataFinal->format('Y-m-d')}' ";
+        $sql .= " AND '{$dataFinal->format('Y-m-d')}' ";
     }
 
-    $sql .= "AND cad.fk_procedimento_agendamento = proc.id_procedimento_agendamento GROUP BY tec.nome_tecnico;";
+    $sql .= " AND cad.fk_procedimento_agendamento = proc.id_procedimento_agendamento GROUP BY tec.nome_tecnico;";
 
     if ($dataInicial <= $dataFinal) {
-        
+
         $qryLista = mysqli_query($conn, $sql);
 
         while ($resultado = mysqli_fetch_assoc($qryLista)) {
             $vetor[] = array_map('utf8_encode', $resultado);
         }
-
     } else {
         echo 'Digite as Datas Corretamente.';
         die();
@@ -73,23 +78,24 @@ function alterarOrdem()
         $sql .= "fk_nome_tecnico = (select id_tecnico from tecnico where nome_tecnico='" . $_GET['nomeTenico'] . "') ,";
     }
     if (isset($_GET['tipoOrdem'])) {
-        $sql .= "fk_procedimento_agendamento = " . $_GET['tipoOrdem'] . " ,";
+        $sqlOrdem = "SELECT id_procedimento_agendamento FROM procedimento_agendamento WHERE nomeProcedimento = '" . utf8_decode($_GET['tipoOrdem']) . "'";
+        $qryresult = mysqli_query($conn, $sqlOrdem);
+        $idTipoOrdem = mysqli_fetch_array($qryresult);
+        $sql .= "fk_procedimento_agendamento = $idTipoOrdem[0] ,";
     }
     if (isset($_GET['txtPontosExtra'])) {
-        $sql .= "ponto_extra = " . $_GET['txtPontosExtra'] . ",";
+        $sql .= " ponto_extra = " . $_GET['txtPontosExtra'] . ",";
     }
     if (isset($_GET['txtAreaPontoExtra'])) {
-        $sql .= "motivo_ponto_extra =  '" . utf8_decode($_GET['txtAreaPontoExtra']) . "' ,";
+        $sql .= " motivo_ponto_extra =  '" . utf8_decode($_GET['txtAreaPontoExtra']) . "' ,";
     }
     if (isset($_GET['txtObs'])) {
-        $sql .= "observacao_agendamento = '" . utf8_decode($_GET['txtObs']) . "' ,";
+        $sql .= " observacao_agendamento = '" . utf8_decode($_GET['txtObs']) . "' ,";
     }
 
     $sql = rtrim($sql, ',');
 
-    $sql .= " WHERE `cadastro_agendamento`.`id_cadastro_agendamento` = {$_GET['idOrdem']} AND `cadastro_agendamento`.`numero_ordem` = {$_GET['nOrdem']}";
-
-
+    $sql .= " WHERE cadastro_agendamento.id_cadastro_agendamento = {$_GET['idOrdem']} AND cadastro_agendamento.numero_ordem = {$_GET['nOrdem']}";
 
     if (mysqli_query($conn, $sql)) {
         echo "1";
@@ -126,6 +132,9 @@ function excluirOrdem()
         echo "Erro ao deletar: " . mysqli_error($conn);
     }
 }
+
+
+
 
 
 function selecionarAlterar()

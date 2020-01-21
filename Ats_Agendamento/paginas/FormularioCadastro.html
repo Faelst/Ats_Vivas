@@ -62,7 +62,7 @@
                         <option value="8">Roseira</option>
                         <option value="9">Mogi das Cruzes</option>
                         <option value="10">Potim</option>
-                        <option value="11">Aparecida</option>
+                        <option value="11">Guaratinguetá</option>
                     </select>
                 </div>
 
@@ -104,7 +104,7 @@
                                 <a class="dropdown-item" value='0.20'>Vistoria</a>
                                 <a class="dropdown-item" value='1.00'>Rompimento</a>
                                 <a class="dropdown-item" value='4.00'>Treinamento/NR</a>
-                                <a class="dropdown-item" >Duplado</a>
+                                <a class="dropdown-item">Duplado</a>
                                 <div role="separator" class="dropdown-divider"></div>
                                 <a class="dropdown-item" value='0.00'>Nao Executado</a>
                             </div>
@@ -119,11 +119,30 @@
                                 aria-label="Text input with dropdown button" placeholder="Pontos" disabled>
                         </div>
                     </div>
+
                     <div class="form-check mx-1" id='pontoExtra'>
                         <input class="form-check-input" type="checkbox" value="" id='PotucaoExtra'>
                         <label class="form-check-label" for="defaultCheck1" style="color: white;">
                             Potuação Extra.
                         </label>
+                    </div>
+
+                    <div id='tecnicoDuplado'>
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-transparent" id="basic-addon1"
+                                    style="color: white; height: 30px;font-size: 12px"> Nome do 2º
+                                    Tecnico :</span>
+                            </div>
+                            <input type="text" class="form-control bg-transparent rounded-right"
+                                style="color: white; height: 30px;font-size: 12px" id='nomeTenicoDuplado'
+                                aria-label="Username" aria-describedby="basic-addon1">
+                            <div class="mx-1">
+                                <input type="text" class="form-control  bg-transparent "
+                                    style="color: white;width: 60px; height: 30px;font-size: 12px" id='txPontosDuplado'
+                                    aria-label="Text input with dropdown button" placeholder="Pontos" disabled>
+                            </div>
+                        </div>
                     </div>
 
 
@@ -143,7 +162,6 @@
                         </div>
                     </div>
                 </div>
-
 
 
                 <div class="input-group mb-3">
@@ -170,4 +188,3 @@
 
 <!-- SCRIPTS  -->
 <script src="js/Requisicoes.js"></script>
-
