@@ -1,3 +1,0 @@
-$('#atividade').click(function(){
-
-})

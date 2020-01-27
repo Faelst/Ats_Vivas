@@ -1,0 +1,264 @@
+<link rel="stylesheet" href="css/autocomplete.css">
+<script src="js/AlterarExcluir.js"></script>
+
+<div class="container-fluid">
+    <div class="m-1 my-5">
+        <div class="p-4 rounded" style="background-color: rgba(61, 61, 61, 0.63);">
+
+            <div class="d-flex bd-highlight mb-3">
+                <div class="p-2 bd-highlight">
+                    <h4 class="p-1 " style="color: white"> Ordens Cadastradas : </h4>
+                </div>
+
+                <div class="ml-auto p-2 bd-highlight">
+                    <button type="button" id='btnModal' class="btn btn-info" data-toggle="modal"
+                        data-target="#exampleModalCenter">Editar Ordem</button>
+                </div>
+            </div>
+            <hr class="bg-white">
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Editar Ordens </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class=''>
+                                <div class="input-group input-group-sm mb-3">
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                            id="selectTipoPesquisa" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false" value='Selecionar'>Selecionar</button>
+                                        <div class="dropdown-menu selecionar-pesquisa">
+                                            <a class="dropdown-item item-selecionado" value='id'>ID</a>
+                                            <a class="dropdown-item item-selecionado" value='numeroOrdem' disable>Nº ordem</a>
+                                            <div role="separator" class="dropdown-divider"></div>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control" aria-label="Sizing example input"
+                                        id="inputEditar" aria-describedby="inputGroup-sizing-sm">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button"
+                                            id="btnPesquisar">Pesquisar</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="conteudo" id="conteudo">
+                                    <!-- colocar dentro de uma requisição ajax para ser exibida -->
+                                    <div class="my-1">
+                                        <div class="input-group mb-3 ">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent  " id="basic-addon1"
+                                                    style="color: black; height: 30px;font-size: 12px">Nº da
+                                                    Ordem :</span>
+                                            </div>
+                                            <input type="text" class="form-control bg-transparent rounded-right"
+                                                placeholder="" id='nOrdemServico' aria-label="Username"
+                                                style="color: black; height: 30px;font-size: 12px"
+                                                aria-describedby="basic-addon1" disabled>
+
+
+
+                                            <div class="mx-1">
+
+                                            </div>
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text  bg-transparent rounded-left"
+                                                    for="inputGroupSelect01"
+                                                    style="color: black; height: 30px;font-size: 12px">Cidade:</label>
+                                            </div>
+                                            <select class=" custom-select bg-transparent" id="selectCIdade"
+                                                style="color: black; height: 30px;font-size: 10px">
+                                                <option value="">Selecione</option>
+                                                <option value="1">Jacarei</option>
+                                                <option value="2">São Jóse dos Campos</option>
+                                                <option value="3">Guararema</option>
+                                                <option value="4">Campos do Jordão</option>
+                                                <option value="5">Taubate</option>
+                                                <option value="6">Caçapava</option>
+                                                <option value="7">Pinda</option>
+                                                <option value="8">Roseira</option>
+                                                <option value="9">Mogi das Cruzes</option>
+                                                <option value="10">Potim</option>
+                                                <option value="11">Aparecida</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent" id="basic-addon1"
+                                                    style="color: black; height: 30px;font-size: 12px">Data
+                                                    de Execução
+                                                    :</span>
+                                            </div>
+                                            <input type="text" class="form-control bg-transparent"
+                                                placeholder="DD/MM/YYYY" aria-label="Username" id='dataAbertura'
+                                                style="color: black; height: 30px;font-size: 12px"
+                                                aria-describedby="basic-addon1" disabled>
+                                        </div>
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent" id="basic-addon1"
+                                                    style="color: black; height: 30px;font-size: 12px" disabled>Nome
+                                                    do Tecnico :</span>
+                                            </div>
+                                            <input type="text" class="form-control"
+                                                style="color: black; height: 30px;font-size: 12px" id='nomeTenico'>
+                                        </div>
+
+                                        <div class="mb-3 mt-3">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <button
+                                                        class="btn btn-outline-secondary dropdown-toggle bg-transparent"
+                                                        type="button" data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false"
+                                                        style="color: black; height: 30px;font-size: 12px">Tipo
+                                                        de O.S</button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" value='1'>Instalação</a>
+                                                        <a class="dropdown-item" value='1.5'>Instalação Alta
+                                                            Dificuldade</a>
+                                                        <a class="dropdown-item" value='0.5'>Manutenção</a>
+                                                        <a class="dropdown-item" value='0.5'>Retirada</a>
+                                                        <a class="dropdown-item" value='0.2'>Vistoria</a>
+                                                        <a class="dropdown-item" value='1'>Rompimento</a>
+                                                        <a class="dropdown-item" value='4'>Treinamento/NR</a>
+                                                        <div role="separator" class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" value='0'>Nao Executado</a>
+                                                    </div>
+                                                </div>
+
+                                                <input type="text" class="form-control  bg-transparent rounded-right"
+                                                    style="color: black; height: 30px;font-size: 12px" id="tipoOrdem"
+                                                    aria-label="Text input with dropdown button"
+                                                    placeholder="Selecione o Tipo de O.S" disabled>
+                                                <div class="mx-1">
+                                                    <input type="text" class="form-control  bg-transparent "
+                                                        style="color: black;width: 60px; height: 30px;font-size: 12px"
+                                                        id='txPontos' aria-label="Text input with dropdown button"
+                                                        placeholder="Pontos" disabled>
+                                                </div>
+                                            </div>
+
+                                            <div id="divPontoExtra">
+                                                <input type="text" class="form-control bg-transparent my-1"
+                                                    placeholder="Pontos" aria-label="Username" id="txtPontosExtra"
+                                                    style="color: black;width: 65px; height: 30px;font-size: 12px"
+                                                    aria-describedby="basic-addon1">
+
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-transparent" id="basic-addon1"
+                                                            style="color: black; font-size: 12px">Motivo do Ponto
+                                                            Extra:</span>
+                                                    </div>
+                                                    <textarea class="form-control rounded bg-transparent" value=""
+                                                        id="txtAreaPontoExtra" style="font-size: 8px;color: black;"
+                                                        rows="1"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent"
+                                                    style="color: black; font-size: 12px">OBS
+                                                    :</span>
+                                            </div>
+                                            <textarea class="form-control rounded bg-transparent" id="txtObs" value=""
+                                                style="font-size: 8px;color: black" rows="1"></textarea>
+                                        </div>
+
+                                    </div>
+                                    <!-- colocar dentro de uma requisição ajax para ser exibida -->
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btnExcluir" class="btn btn-danger">Excluir</button>
+                            <button type="button" id="btnAlterar" class="btn btn-warning">Alterar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+
+
+            
+
+
+
+
+
+            <table id="example" class="display" style="width:100%;font-size: 10px">
+                <thead>
+                    <tr>
+                        <th>ID: </th>
+                        <th>Nº ordem: </th>
+                        <th>Usuario: </th>
+                        <th>Data de Exec.: </th>
+                        <th>Tecnico: </th>
+                        <th>Cidade: </th>
+                        <th>Tipo de Ordem: </th>
+                        <th>Ponto Extra: </th>
+                        <th>Motivo </th>
+                        <th>Observação: </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('tbody').empty();
+        $('#example').DataTable({
+
+            "ordering": true,
+            "language": {
+                "url": "JsonTabela/Portuguese-Brasil.json",
+            },
+            ajax: {
+                url: './php/PopularTables.php?flag=1',
+                dataSrc: ''
+            },
+
+            columns: [
+                { 'data': 'id_cadastro_agendamento' },
+                { 'data': 'numero_ordem' },
+                { 'data': 'Nome_usuario' },
+                { 'data': 'data_execucao' },
+                { 'data': 'Nome_tecnico' },
+                { 'data': 'Cidade' },
+                { 'data': 'Nome_procedimento' },
+                { 'data': 'ponto_extra' },
+                { 'data': 'motivo_extra' },
+                { 'data': 'obs' },
+            ]
+        });
+
+        var table = $('#example').DataTable();
+
+        table.columns(0).order('desc').draw();
+    })
+</script>
+<link rel="stylesheet" href="css/tables.css">
+

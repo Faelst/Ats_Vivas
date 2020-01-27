@@ -1,0 +1,10 @@
+th { font-size: 10px; color: white;}
+td { font-size: 8px; text-align: center;  }
+#example_filter { font-size: 10px; color: white; }
+#example_length { font-size: 10px; color: white;}
+tr { opacity: 0.75;}
+.redunded {border-radius: 15px}
+#example_info{color: white; font-size:10px;}
+#example_paginate{font-size:10px; color:white}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button { color: white !important;}
