@@ -38,8 +38,6 @@ function verificarDuplicidade()
 
 function cadastrarOrdem()
 {
-
-
     include_once('../php/conexao.php');
 
     //verificação se o campos estão vazios
@@ -104,7 +102,7 @@ function cadastrarOrdem()
         $pontoExtra = 'null';
     }
 
-    if (isset($_GET['observacao']) && strlen($_GET['observacao']) > 4) {
+    if (isset($_GET['observacao']) && strlen($_GET['observacao']) > 12) {
         $observacao = "'" . utf8_decode($_GET['observacao']) . "'";
     } else {
         echo 'Informe a OBSERVAÇÃO DO CADASTRO corretamente.';
@@ -117,7 +115,7 @@ function cadastrarOrdem()
         
         if (isset($_GET['nomeTenicoDuplado'])) {
             $nomeTenicoDuplado = $_GET['nomeTenicoDuplado'];
-            if(intval($_GET['pontuacaoExtra']) > 0){
+            if(floatval($_GET['pontuacaoExtra']) > 0){
                 $pontoExtra = ($_GET['pontuacaoExtra']) / 2;
                 $flag = cadastrarSegundoTecnicoDuplado($nomeTenicoDuplado, $cidade, $tipoOrdenServico, $numeroOrdem, $dataExecucao, $dataFechamento, $pontoExtra, $motivoPontoExtra, $observacao, $conn);
             }else {

@@ -13,7 +13,7 @@ use Dompdf\Dompdf;
 
 include_once('../conexao.php');
 
-$sql = " SELECT tec.id_tecnico as id_tecnico, tec.nome_tecnico AS nome_tecnico , SUM(proc.pontucao) AS Pontos_normais , FORMAT(SUM(cad.ponto_extra),2) AS Pontos_adicionados , FORMAT(SUM( COALESCE(cad.ponto_extra,0)+ COALESCE(proc.pontucao,0)),2) AS pontos_totais FROM cadastro_agendamento AS cad , tecnico AS tec , procedimento_agendamento AS proc WHERE tec.id_tecnico = cad.fk_nome_tecnico AND ";
+$sql = " SELECT tec.id_tecnico as id_tecnico, tec.nome_tecnico AS nome_tecnico , SUM(proc.pontucao) AS Pontos_normais , /*FORMAT(*/SUM(cad.ponto_extra)/*,2)*/ AS Pontos_adicionados , FORMAT(SUM( COALESCE(cad.ponto_extra,0)+ COALESCE(proc.pontucao,0)),2) AS pontos_totais FROM cadastro_agendamento AS cad , tecnico AS tec , procedimento_agendamento AS proc WHERE tec.id_tecnico = cad.fk_nome_tecnico AND ";
 
 $sql .= " cad.fk_procedimento_agendamento = proc.id_procedimento_agendamento AND ";
 
@@ -28,7 +28,8 @@ $sql .= " cad.data_execucao BETWEEN '" . $dataInicial . "' AND '" . $dataFinal .
     $sql .= " cad.data_execucao BETWEEN '" . date('Y-m') . "-20' AND '" . date('Y-m-d', strtotime('+1 month', strtotime(date('Y-m') . '-19'))) . "'";
 }*/
 
-$sql .= " GROUP BY tec.nome_tecnico ORDER BY pontos_totais DESC;";
+$sql .= " GROUP BY tec.nome_tecnico ORDER BY Pontos_adicionados DESC;";
+
 
 //Consultando banco de dados
 $qryLista = mysqli_query($conn, $sql);
@@ -39,7 +40,7 @@ while($dados = mysqli_fetch_array($qryLista)){
     $id_tecnico = $dados['id_tecnico'];
     $nome_tecnico = $dados['nome_tecnico']; 
     $Pontos_normais = $dados['Pontos_normais'];
-    $Pontos_adicionados = $dados['Pontos_adicionados'];
+    $Pontos_adicionados = number_format($dados['Pontos_adicionados'],2,".","");
     $pontos_totais = $dados['pontos_totais'];
 
     $html .= "<tr role='row' class='odd'><td>$id_tecnico</td><td>$nome_tecnico</td><td>$Pontos_normais</td><td>$Pontos_adicionados</td><td class='sorting_1'>$pontos_totais</td></tr>";

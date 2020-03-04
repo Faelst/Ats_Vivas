@@ -2,7 +2,6 @@
 
 session_start();
 
-
 if (empty($_SESSION['validaLogin'])) {
   header('location: Login.php');
 }
@@ -21,7 +20,9 @@ if (empty($_SESSION['validaLogin'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content=" height=600,width=444">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>AT&s</title>
+  <title>Controle de Pontuação</title>
+
+  <link rel="icon" type="image/png" href="img/favicon.png">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -63,7 +64,7 @@ if (empty($_SESSION['validaLogin'])) {
             </div>
             <div class="modal-body">
               <div class="btn-group dropright">
-                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" id='btnChangeLog' class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Versões
                 </button>
                 <div class="dropdown-menu">
@@ -81,10 +82,10 @@ if (empty($_SESSION['validaLogin'])) {
       </div>
 
       <div class="mr-3 mt-4 mb-5 ml-auto bd-highlight ">
-      <span class="my-5">
-        <img src="img/images/AT&S.png" />
-      </span>
-    </div>
+        <span class="my-5">
+          <img src="img/images/AT&S.png" />
+        </span>
+      </div>
 
       <div class="mr-3 mt-2 mb-1 ml-auto bd-highlight ">
         <!--  <img src="img/images/icons/user.png" style="width: 20.5%;margin-bottom: 5px" />-->
@@ -217,15 +218,19 @@ if (empty($_SESSION['validaLogin'])) {
         </ul>
       </div>
     </nav>
+
     <div id='conteudo'>
+
     </div>
 
+    <div align="center" class="mt-1">
+      <p style="color:white">&copy; 2020 Rafael Silverio</p>
+    </div>
   </div>
 
 </body>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" onerror="location.reload()" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" onerror="location.reload()" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -239,7 +244,6 @@ if (empty($_SESSION['validaLogin'])) {
 
 <script src="js/popup/Navegação.js"></script>
 <script src="js/UserConfig.js"></script>
-
 
 <script>
   $(document).ready(function() {

@@ -1,5 +1,12 @@
 <link rel="stylesheet" href="css/autocomplete.css">
+<link rel="stylesheet" href="css/FiltroCadastro/CheckBoxFiltroCadastro.css">
+
+<script src="node_modules/jquery-mask-plugin/dist/jquery.mask.js">/* inputmask */</script>
 <script src="js/AlterarExcluir.js"></script>
+<script src="js/FiltroCadastro/js/FiltroCadastro.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
 
 <div class="container-fluid">
     <div class="m-1 my-5">
@@ -15,7 +22,104 @@
                         data-target="#exampleModalCenter">Editar Ordem</button>
                 </div>
             </div>
+
             <hr class="bg-white">
+
+            <!--
+            <div class="col-xl-6 col-md-8 col-sm-12 col-12 ">
+                <h6 style="color: white">Intervalo de Datas:</h6>
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control hasDatepicker" aria-label="Recipient's username"
+                        placeholder="dd/mm/aaaa" id="dataInicialCadastradas" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">Ate</span>
+                    </div>
+                    <input type="text" class="form-control rounded-right hasDatepicker"
+                        aria-label="Recipient's username" placeholder="dd/mm/aaaa" id="dataFinal"
+                        aria-describedby="basic-addon2">
+                    <button type="button" id="btnFiltrar" class="btn btn-success mx-5 bg-transparent">Filtrar</button>
+                </div>
+                <div class="m-1 row">
+                    <label class="switch ">
+                        <input type="checkbox" id="checkPontuaçãoExtra" class="success">
+                        <span class="slider round"></span>
+                    </label>
+                    <p class='mt-2 ml-1' style="color:white;">Somente com Pontuação Extra</p>
+                </div>
+            </div>
+             -->
+
+            <div class="mb-3">
+                <button id="btnFiltro"
+                    style="background-color: Transparent;background-repeat:no-repeat;border:none;cursor:pointer;overflow: hidden;outline:none;"
+                    data-toggle="modal" data-target="#FiltroCadastro"><img src="./img/filter.png" alt="Filtro Cadastro"
+                        height="30" width="30"></button>
+            </div>
+            <!-- modal Filtro das Ordens Cadastradas -->
+            <div class="modal fade" id="FiltroCadastro" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h7 class="modal-title" id="exampleModalLongTitle">Filtro Cadastro</h7>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <select id="framework" name="framework[]" multiple class="form-control">
+                                </select>
+                            </div>
+                            <hr style="color:black">
+                            <h6 class="mp-1" style="color: black">Intervalo de Datas:</h6>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control hasDatepicker" aria-label="Recipient's username"
+                                    placeholder="dd/mm/aaaa" id="dataInicialCadastradas"
+                                    aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2">Ate</span>
+                                </div>
+                                <input type="text" class="form-control rounded-right hasDatepicker"
+                                    aria-label="Recipient's username" placeholder="dd/mm/aaaa" id="dataFinal"
+                                    aria-describedby="basic-addon2">
+                            </div>
+                            <hr style="color:black">
+                            <div class="m-1 row">
+                                <label class="switch ">
+                                    <input type="checkbox" id="checkPontuaçãoExtra" class="success">
+                                    <span class="slider round"></span>
+                                </label>
+                                <p class='mt-2 ml-1' style="color:black;">Somente com Pontuação Extra</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <button id='btnFiltrar' type="button" class="btn btn-primary">Filtra</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+
+            <!-- Modal Loading -->
+            <div class='modal fade' id='modalLoading' tabindex='-1' role='dialog'
+                aria-labelledby='TituloModalCentralizado' aria-hidden='true'>
+                <div class='modal-dialog modal-dialog-centered' role='document'>
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h5 class='modal-title' id='TituloModalCentralizado'>Carregando Filtro</h5> 
+                        </div>
+                        <div class='modal-body'>
+                            <div align="center"> 
+                                <img style='width:50%;' src='img/gif/loading.gif' />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
@@ -37,7 +141,8 @@
                                             aria-expanded="false" value='Selecionar'>Selecionar</button>
                                         <div class="dropdown-menu selecionar-pesquisa">
                                             <a class="dropdown-item item-selecionado" value='id'>ID</a>
-                                            <a class="dropdown-item item-selecionado" value='numeroOrdem' disable>Nº ordem</a>
+                                            <a class="dropdown-item item-selecionado" value='numeroOrdem' disable>Nº
+                                                ordem</a>
                                             <div role="separator" class="dropdown-divider"></div>
                                         </div>
                                     </div>
@@ -48,7 +153,7 @@
                                             id="btnPesquisar">Pesquisar</button>
                                     </div>
                                 </div>
-                                
+
                                 <div class="conteudo" id="conteudo">
                                     <!-- colocar dentro de uma requisição ajax para ser exibida -->
                                     <div class="my-1">
@@ -87,6 +192,7 @@
                                                 <option value="9">Mogi das Cruzes</option>
                                                 <option value="10">Potim</option>
                                                 <option value="11">Aparecida</option>
+                                                <option value="15">Santa Isabel</option>
                                             </select>
                                         </div>
 
@@ -195,7 +301,7 @@
             <!-- Modal -->
 
 
-            
+
 
 
 
@@ -242,16 +348,16 @@
             },
 
             columns: [
-                { 'data': 'id_cadastro_agendamento' },
-                { 'data': 'numero_ordem' },
-                { 'data': 'Nome_usuario' },
-                { 'data': 'data_execucao' },
-                { 'data': 'Nome_tecnico' },
-                { 'data': 'Cidade' },
-                { 'data': 'Nome_procedimento' },
-                { 'data': 'ponto_extra' },
-                { 'data': 'motivo_extra' },
-                { 'data': 'obs' },
+                {'data': 'id_cadastro_agendamento'},
+                {'data': 'numero_ordem'},
+                {'data': 'Nome_usuario'},
+                {'data': 'data_execucao'},
+                {'data': 'Nome_tecnico'},
+                {'data': 'Cidade'},
+                {'data': 'Nome_procedimento'},
+                {'data': 'ponto_extra'},
+                {'data': 'motivo_extra'},
+                {'data': 'obs'},
             ]
         });
 
@@ -261,4 +367,3 @@
     })
 </script>
 <link rel="stylesheet" href="css/tables.css">
-

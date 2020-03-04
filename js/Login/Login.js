@@ -19,7 +19,7 @@ $(document).ready(function () {
                 .done(function (resp) {
                     resposta = JSON.parse(resp);
                     if (parseInt(resposta.rows) == 1) {
-                        window.location.href = 'http://177.126.240.61/Main_caps/Caps_Agendamento/'; //(document.URL).replace("login.php","index.php");
+                        window.location.href = 'http://177.126.240.61/Main_ats/ats'; //(document.URL).replace("login.php","index.php");
                     } else {
                         $('.validaLogin').html('<span class="badge badge-danger conteudo ">LOGIN INCORRETO.</span>');
                     }

@@ -111,7 +111,7 @@ function popularOrdens()
     WHERE usu.id_usuario=cad.fk_usuario AND tec.id_tecnico = cad.fk_nome_tecnico AND cid.id_cidade = cad.fk_cidade AND proc.id_procedimento_agendamento = cad.fk_procedimento_agendamento ";
 
     if (intval($_SESSION['admin_user']) == 0) {
-        $sql .= " AND cad.fk_usuario = " . intval($_SESSION['id_usuario']) . "";
+        $sql .= " AND cad.fk_usuario = " . intval($_SESSION['id_usuario']) . " ";
     }
 
     //Consultando banco de dados
